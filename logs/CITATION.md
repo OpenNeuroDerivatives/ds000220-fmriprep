@@ -1,8 +1,8 @@
 
 Results included in this manuscript come from preprocessing
-performed using *fMRIPrep* 21.0.2
+performed using *fMRIPrep* 22.0.0
 (@fmriprep1; @fmriprep2; RRID:SCR_016216),
-which is based on *Nipype* 1.6.1
+which is based on *Nipype* 1.8.3
 (@nipype1; @nipype2; RRID:SCR_002502).
 
 
@@ -21,8 +21,8 @@ the brain-extracted T1w using `fast` [FSL 6.0.5.1:57b01774, RRID:SCR_002823,
 @fsl_fast].
 A T1w-reference map was computed after registration of
 3 T1w images (after INU-correction) using
-`mri_robust_template` [FreeSurfer 6.0.1, @fs_template].
-Brain surfaces were reconstructed using `recon-all` [FreeSurfer 6.0.1,
+`mri_robust_template` [FreeSurfer 7.2.0, @fs_template].
+Brain surfaces were reconstructed using `recon-all` [FreeSurfer 7.2.0,
 RRID:SCR_001847, @fs_reconall], and the brain mask estimated
 previously was refined with a custom variation of the method to reconcile
 ANTs-derived and FreeSurfer-derived segmentations of the cortical
@@ -87,8 +87,8 @@ voxels within the brain mask.
 For aCompCor, three probabilistic masks (CSF, WM and combined CSF+WM)
 are generated in anatomical space.
 The implementation differs from that of Behzadi et al. in that instead
-of eroding the masks by 2 pixels on BOLD space, the aCompCor masks are
-subtracted a mask of pixels that likely contain a volume fraction of GM.
+of eroding the masks by 2 pixels on BOLD space, a mask of pixels that
+likely contain a volume fraction of GM is subtracted from the aCompCor masks.
 This mask is obtained by dilating a GM mask extracted from the FreeSurfer's *aseg* segmentation, and it ensures components are not extracted
 from voxels containing a minimal fraction of GM.
 Finally, these masks are resampled into BOLD space and binarized by
@@ -105,7 +105,10 @@ The confound time series derived from head motion estimates and global
 signals were expanded with the inclusion of temporal derivatives and
 quadratic terms for each [@confounds_satterthwaite_2013].
 Frames that exceeded a threshold of 0.5 mm FD or
-1.5 standardised DVARS were annotated as motion outliers.
+1.5 standardized DVARS were annotated as motion outliers.
+Additional nuisance timeseries are calculated by means of principal components
+analysis of the signal found within a thin band (*crown*) of voxels around
+the edge of the brain, as proposed by [@patriat_improved_2017].
 The BOLD time-series were resampled into standard space,
 generating a *preprocessed BOLD run in MNI152NLin2009cAsym space*.
 First, a reference volume and its skull-stripped version were generated
@@ -137,7 +140,7 @@ Non-gridded (surface) resamplings were performed using `mri_vol2surf`
 
 
 Many internal operations of *fMRIPrep* use
-*Nilearn* 0.8.1 [@nilearn, RRID:SCR_001362],
+*Nilearn* 0.9.1 [@nilearn, RRID:SCR_001362],
 mostly within the functional processing workflow.
 For more details of the pipeline, see [the section corresponding
 to workflows in *fMRIPrep*'s documentation](https://fmriprep.readthedocs.io/en/latest/workflows.html "FMRIPrep's documentation").
