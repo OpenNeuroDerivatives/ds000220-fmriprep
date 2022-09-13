@@ -1,8 +1,0 @@
-{
-  "RawSources": [
-    "sub-tbi06/ses-1/anat/sub-tbi06_ses-1_T1w.nii.gz",
-    "sub-tbi06/ses-2/anat/sub-tbi06_ses-2_T1w.nii.gz",
-    "sub-tbi06/ses-3/anat/sub-tbi06_ses-3_T1w.nii.gz"
-  ],
-  "Type": "Brain"
-}
